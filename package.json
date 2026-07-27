@@ -1,0 +1,25 @@
+{
+  "name": "nyc-transit-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "build:stations": "node scripts/build-stations.js",
+    "build:routes": "node scripts/build-routes.js"
+  },
+  "devDependencies": {
+    "@evenrealities/evenhub-cli": "^0.1.13",
+    "@evenrealities/evenhub-simulator": "^0.8.0",
+    "adm-zip": "^0.6.0",
+    "sass-embedded": "^1.100.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.1.1"
+  },
+  "dependencies": {
+    "@evenrealities/even_hub_sdk": "^0.0.12",
+    "gtfs-realtime-bindings": "^2.1.0"
+  }
+}

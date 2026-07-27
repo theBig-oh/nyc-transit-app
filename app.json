@@ -1,0 +1,25 @@
+{
+  "package_id": "com.example.nyctransitapp",
+  "edition": "202601",
+  "name": "NYC Transit",
+  "version": "0.1.0",
+  "min_app_version": "2.0.0",
+  "min_sdk_version": "0.0.12",
+  "entrypoint": "index.html",
+  "permissions": [
+    {
+      "name": "network",
+      "desc": "Fetch live MTA subway/bus arrival times and stop data",
+      "whitelist": [
+        "https://api-endpoint.mta.info"
+      ]
+    },
+    {
+      "name": "location",
+      "desc": "Find nearby subway/bus stops based on your location"
+    }
+  ],
+  "supported_languages": [
+    "en"
+  ]
+}
