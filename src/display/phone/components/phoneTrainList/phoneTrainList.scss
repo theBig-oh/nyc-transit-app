@@ -77,8 +77,8 @@
 			&::after {
 				content: "";
 			    position: absolute;
-			    top: 50%;
-			    left: 50%;
+			    top: 24px;
+			    left: 32px;
 			    width: 1rem;
 			    height: 1rem;
 			    border: solid #fff;
@@ -89,8 +89,8 @@
 			&::before {
 				content: "";
 			    position: absolute;
-			    top: 48%;
-			    left: 26%;
+			    top: 21px;
+			    left: 16px;
 			    width: 1.5rem;
 			    height: 6px;
 			    background: #fff;
