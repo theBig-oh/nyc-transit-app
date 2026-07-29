@@ -2,7 +2,6 @@
 
 /*
   MakeElements --- 
-
     MakeElement.createEle : Creates HTML element of your choosing
                             
                             Type: Takes string value, can create any element type ie "div", "span","img"

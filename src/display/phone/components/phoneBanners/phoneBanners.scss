@@ -1,0 +1,53 @@
+
+.phoneBanner {
+	&__header {
+		height: 3rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 1.5rem;
+		margin-bottom: 1.5rem;
+		position: relative;
+
+		background-color: #165946;
+		background-image: url("https://www.transparenttextures.com/patterns/subtle-grey.png");
+		background-size: 50%; 
+		background-repeat: repeat;
+		
+		/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+		
+		&::before {
+			content: ' ';
+			height: 60%;
+			width: 95%;
+			position: absolute;
+			left: 6px;
+			top: 6px;
+			border: 4px solid rgb(239 141 61 / 64%);
+		}
+
+		&--background {
+			width: 94%;
+			height: 55%;
+			background-color: #2f3b71;
+			background-image: url("https://www.transparenttextures.com/patterns/subtle-grey.png");
+			background-size: 50%; 
+			background-repeat: repeat;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border: 2px solid white;
+		}
+
+		&--text {
+			color: white;
+			text-transform: uppercase;
+			letter-spacing: 3px;
+		}
+
+	}
+
+	&__footer {
+		border: 1px solid black;
+	}
+}

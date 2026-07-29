@@ -2,7 +2,8 @@
 	border-radius: 4px;
 	display: flex;
 	padding: 1rem;
-	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: flex-start;
 	background-color: #c1c1c1;
 	background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
 	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
@@ -20,6 +21,7 @@
 		background: #1e1e1e; // change to actual variable or token
 		position: relative;
 		box-shadow: 4px 6px 3px 0px rgba(0, 0, 0, 0.7);
+		margin-right: 9px;
 
 		&:after {
 			content: ' ';
