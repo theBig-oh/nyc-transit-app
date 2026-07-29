@@ -1,4 +1,4 @@
-
+export let currentPhoneState = 'home';
 
 export const trainRoutesByColor = [
   {
