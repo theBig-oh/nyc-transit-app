@@ -10,9 +10,13 @@ export default function PhoneTrainList() {
 	const phoneTrainListHeader = makeEle.createEle('div','phoneTrainList__header',null,['phoneTrainList__header'])
 
 	phoneTrainListHeader.innerHTML = `
-		<div class="phoneTrainList__header--text">
+		<div class="phoneTrainList__header-text--title">
 			Trains: 
 		</div>
+		<div class="phoneTrainList__header-text--flavor">
+			Select a train line
+		</div>
+		<div class="phoneTrainList__header-text--arrow"></div>
 	`;
 
 	phoneTrainListDiv.append(phoneTrainListHeader);
