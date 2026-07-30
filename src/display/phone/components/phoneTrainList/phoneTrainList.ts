@@ -1,5 +1,5 @@
 import { trainRoutesByColor } from '../../../../state';
-import MakeElement from '../../../../utils/makeElement';
+import { MakeElement } from '../../../../utils/makeElement';
 
 const makeEle = new MakeElement;
 const trainsDivsArranged = [];
@@ -24,7 +24,6 @@ export default function PhoneTrainList() {
 	trains.forEach((train, i) => {
 		let traArr = [];
 		for (let x = 0; x <= train.routes.length - 1; x++) {
-			console.log(train.routes[x]);
 			let trainRouteName = train.routes[x].toString();
 			
 			const classes = /Express$/.test(trainRouteName) ? ['train-list__item', 'train-list__item--express','express'] : ['train-list__item'];

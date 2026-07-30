@@ -1,5 +1,7 @@
 'use strict'
 
+import { FULL_W, FULL_H } from '../state';
+
 /*
   MakeElements --- 
     MakeElement.createEle : Creates HTML element of your choosing
@@ -13,7 +15,7 @@
 
 */
 
-function MakeElement(){     
+export function MakeElement(){     
   this.createEle = function(type,name,gridsize,custom) {
     let newElement = document.createElement(type); 
         newElement.id = name;
@@ -49,4 +51,38 @@ function MakeElement(){
   }
 }
 
-export default MakeElement;
+export function displayGrid(gridArray, gridSize) {
+  let wrapped;
+  let wSum = 0;
+  let wAdd = Math.ceil(FULL_W / gridSize);
+  let totalRows = Math.ceil(gridArray.length / gridSize);
+  let rowHeight = Math.ceil(FULL_H / totalRows);
+  let heightCount = 1;
+
+  console.log(totalRows);
+  console.log(rowHeight);
+
+  gridArray.forEach((gri, i) => {
+    if (i > 0) {
+      wSum += wAdd; 
+
+      if (wSum >= FULL_W - 20) {
+        console.log('this is suppose to wrap');
+        wrapped = true;
+        wSum = 0;
+        heightCount +=1;
+
+      }
+    } 
+    gri.height = rowHeight;
+    gri.yPosition =  (heightCount - 1) * rowHeight;
+    gri.xPosition = wSum;
+    gri.width = wAdd;
+
+    console.log(gri);
+  })
+
+  return gridArray;
+
+
+}

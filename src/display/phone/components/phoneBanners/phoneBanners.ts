@@ -1,4 +1,4 @@
-import MakeElement from '../../../../utils/makeElement';
+import { MakeElement } from '../../../../utils/makeElement';
 
 const makeEle = new MakeElement;
 
