@@ -1,8 +1,9 @@
 import { waitForEvenAppBridge, TextContainerProperty, CreateStartUpPageContainer } from '@evenrealities/even_hub_sdk'
 import { setGeoBridge, getUserLocation } from './utils/geolocate';  
-import { mtaURL, setUserLat, setUserLon, userLat, userLon, FALLBACK_LAT, FALLBACK_LON } from './state';
+import { mtaURL, setUserLat, setUserLon, userLat, userLon, FALLBACK_LAT, FALLBACK_LON, trainRoutesByColor } from './state';
 import { displayGrid } from './utils/makeElement';
 import { setMapBridge, mapImageObjects, pushMapToDisplay } from './display/glasses/map';
+import { routeListObject, RouteListContainerId } from './display/glasses/routeList';
 
 import GtfsRealtimeBindings from 'gtfs-realtime-bindings';
 import Stations from '../src/data/stations.json';
@@ -169,8 +170,22 @@ displayArray.push(mainText, secText, threeText, fourText, fiveText, sixText, sev
 
 
 
+let trainArray = [];
 
+trainRoutesByColor.forEach((train, i) => {
+  console.log(train);
+  let trainArr = [];
 
+  for (let x=0; x < train.routes.length; x++) {
+    trainArr.push(train.routes[x]);
+  }
+
+  trainArray.push(trainArr);
+})
+
+const trainNames = trainRoutesByColor.map(g => g.routes.join(', '));
+
+console.log(trainArray);
 
 const result = await bridge.createStartUpPageContainer(
 /*  new CreateStartUpPageContainer({
@@ -179,8 +194,9 @@ const result = await bridge.createStartUpPageContainer(
   })*/
 
   new CreateStartUpPageContainer({
-    containerTotalNum: 2,
+    containerTotalNum: 3,
     imageObject: mapImageObjects(),
+    listObject: [routeListObject(trainNames)],
   })
 )
 

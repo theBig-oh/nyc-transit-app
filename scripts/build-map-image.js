@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { PNG } from 'pngjs';
 
-const SRC = 'unrendered-images/subway-map-boro-outline-white-routes.png';
+const SRC = 'unrendered-images/subway-map-boro-outline-black-routes.png';
 const OUT_DIR = 'src/images';
 const HALF_H = 144;
 const TARGET_W = 250;
