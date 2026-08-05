@@ -2,6 +2,7 @@ import { waitForEvenAppBridge, TextContainerProperty, CreateStartUpPageContainer
 import { setGeoBridge, getUserLocation } from './utils/geolocate';  
 import { mtaURL, setUserLat, setUserLon, userLat, userLon, FALLBACK_LAT, FALLBACK_LON } from './state';
 import { displayGrid } from './utils/makeElement';
+import { setMapBridge, mapImageObjects, pushMapToDisplay } from './display/glasses/map';
 
 import GtfsRealtimeBindings from 'gtfs-realtime-bindings';
 import Stations from '../src/data/stations.json';
@@ -10,6 +11,26 @@ import './style.scss';
 
 const bridge = await waitForEvenAppBridge();
 
+setMapBridge(bridge);
+
+// Check for glasses connection
+await new Promise(resolve => {
+  bridge.getDeviceInfo().then((info) => {
+    console.log('starting: device info:', JSON.stringify(info))
+
+    if(info?.status?.isConnected()) {
+      resolve();
+      return
+    } 
+
+    const unsub = bridge.onDeviceStatusChanged((status) => {
+      if (status.inConnected()) {
+        unsub(); 
+        resolve(); 
+      }
+    })
+  })
+})
 
 try {
   const loc = await getUserLocation();
@@ -147,12 +168,23 @@ const eightText = new TextContainerProperty({
 displayArray.push(mainText, secText, threeText, fourText, fiveText, sixText, sevenText, eightText);
 
 
-const result = await bridge.createStartUpPageContainer(new CreateStartUpPageContainer({
-  containerTotalNum: displayArray.length,
-  textObject: displayGrid(displayArray, 6),
-}))
-console.log(displayArray);
 
+
+
+
+const result = await bridge.createStartUpPageContainer(
+/*  new CreateStartUpPageContainer({
+    containerTotalNum: displayArray.length,
+    textObject: displayGrid(displayArray, 5, 50),
+  })*/
+
+  new CreateStartUpPageContainer({
+    containerTotalNum: 2,
+    imageObject: mapImageObjects(),
+  })
+)
+
+await pushMapToDisplay();
 
 /*
 

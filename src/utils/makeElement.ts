@@ -51,38 +51,24 @@ export function MakeElement(){
   }
 }
 
-export function displayGrid(gridArray, gridSize) {
-  let wrapped;
-  let wSum = 0;
+export function displayGrid(gridArray, gridSize, lockRowHeight) {
   let wAdd = Math.ceil(FULL_W / gridSize);
   let totalRows = Math.ceil(gridArray.length / gridSize);
-  let rowHeight = Math.ceil(FULL_H / totalRows);
-  let heightCount = 1;
-
-  console.log(totalRows);
-  console.log(rowHeight);
+  let rowHeight = lockRowHeight ? lockRowHeight : Math.ceil(FULL_H / totalRows);
+  let lastRowCount = gridArray.length % gridSize || gridSize;
+  let lastWAdd = Math.ceil(FULL_W / lastRowCount);
 
   gridArray.forEach((gri, i) => {
-    if (i > 0) {
-      wSum += wAdd; 
+    let heightCount = Math.floor(i / gridSize) + 1;
+    let colIndex = i % gridSize;
+    let isLastRow = heightCount === totalRows;
+    let width = isLastRow ? lastWAdd : wAdd;
 
-      if (wSum >= FULL_W - 20) {
-        console.log('this is suppose to wrap');
-        wrapped = true;
-        wSum = 0;
-        heightCount +=1;
-
-      }
-    } 
     gri.height = rowHeight;
-    gri.yPosition =  (heightCount - 1) * rowHeight;
-    gri.xPosition = wSum;
-    gri.width = wAdd;
-
-    console.log(gri);
+    gri.yPosition = (heightCount - 1) * rowHeight;
+    gri.xPosition = colIndex * width;
+    gri.width = width;
   })
 
   return gridArray;
-
-
 }

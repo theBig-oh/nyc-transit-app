@@ -39,3 +39,4 @@ export async function updateSplashProgress(pct: number, label: string) {
   displayedPct = pct
   // updatePhoneProgress(pct, label)
 }
+

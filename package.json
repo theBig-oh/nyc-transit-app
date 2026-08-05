@@ -8,12 +8,15 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "build:stations": "node scripts/build-stations.js",
-    "build:routes": "node scripts/build-routes.js"
+    "build:routes": "node scripts/build-routes.js",
+    "build:map": "node scripts/build-map-image.js"
   },
   "devDependencies": {
     "@evenrealities/evenhub-cli": "^0.1.13",
     "@evenrealities/evenhub-simulator": "^0.8.0",
+    "@types/pngjs": "^6.0.5",
     "adm-zip": "^0.6.0",
+    "pngjs": "^7.0.0",
     "sass-embedded": "^1.100.0",
     "typescript": "^5.9.3",
     "vite": "^8.1.1"
