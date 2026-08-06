@@ -12,6 +12,9 @@ import {
 	mapPrimeBottomHeight,
 	mapPrimeBottomBytes
 } from '../../images/mapPrimeBottom';
+import {
+	routeMapImages
+} from '../../images/routeMapsIndex';
 
 export const mapTopContainerId = 1;
 export const mapBottomContainerId = 2;
@@ -59,4 +62,26 @@ export async function pushMapToDisplay() {
 		containerName: 'mapPrimeBottom',
 		imageData: mapPrimeBottomBytes
 	}))
+}
+
+
+export async function pushRouteMapToDisplay(routeIndex) {
+	const routeVar = routeMapImages[routeIndex];
+
+	if (!routeVar) {
+		await pushMapToDisplay();
+		return;
+	}
+
+	await bridgeRef.updateImageRawData(new ImageRawDataUpdate({
+		containerID: mapTopContainerId,
+		containerName: 'mapPrimeTop',
+		imageData: routeVar.top.bytes
+	}))
+	await bridgeRef.updateImageRawData(new ImageRawDataUpdate({
+		containerID: mapBottomContainerId,
+		containerName: 'mapPrimeBottom',
+		imageData: routeVar.bottom.bytes
+	}))
+
 }

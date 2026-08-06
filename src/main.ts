@@ -1,8 +1,9 @@
 import { waitForEvenAppBridge, TextContainerProperty, CreateStartUpPageContainer } from '@evenrealities/even_hub_sdk'
+
 import { setGeoBridge, getUserLocation } from './utils/geolocate';  
-import { mtaURL, setUserLat, setUserLon, userLat, userLon, FALLBACK_LAT, FALLBACK_LON, trainRoutesByColor } from './state';
+import { mtaURL, setUserLat, setUserLon, userLat, userLon, FALLBACK_LAT, FALLBACK_LON, trainRoutesByColor, SCROLL_DEBOUNCE_MS } from './state';
 import { displayGrid } from './utils/makeElement';
-import { setMapBridge, mapImageObjects, pushMapToDisplay } from './display/glasses/map';
+import { setMapBridge, mapImageObjects, pushMapToDisplay, pushRouteMapToDisplay } from './display/glasses/map';
 import { routeListObject, RouteListContainerId } from './display/glasses/routeList';
 
 import GtfsRealtimeBindings from 'gtfs-realtime-bindings';
@@ -201,6 +202,31 @@ const result = await bridge.createStartUpPageContainer(
 )
 
 await pushMapToDisplay();
+
+let scrollDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+let lastPushedIndex: number | null = null;
+
+bridge.onEvenHubEvent((event) => {
+  const listEvent = event.listEvent;
+
+  if (!listEvent || listEvent.containerID !== RouteListContainerId) {
+    return;
+  }
+
+  const index = listEvent.currentSelectItemIndex;
+  if (index == null || index === lastPushedIndex) {
+    return;
+  }
+
+  if (scrollDebounceTimer) {
+    clearTimeout(scrollDebounceTimer);
+  }
+
+  scrollDebounceTimer = setTimeout(() => {
+    lastPushedIndex = index;
+    pushRouteMapToDisplay(index)
+  }, SCROLL_DEBOUNCE_MS);
+})
 
 /*
 
