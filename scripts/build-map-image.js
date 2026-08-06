@@ -2,9 +2,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { PNG } from 'pngjs';
 
-const SRC = 'unrendered-images/subway-map-boro-outline-black-routes.png';
+const SRC = 'unrendered-images/subway-map-blacked-out-land.png';
 const ROUTE_SRC_DIR = 'unrendered-images/colored-routes';
-const ROUTE_SRC_PREFIX = 'subway-map-boro-outline-'; // -1.png ... -10.png, 1-indexed
+const ROUTE_SRC_PREFIX = 'subway-map-outline-'; // -1.png ... -10.png, 1-indexed
 const OUT_DIR = 'src/images';
 const HALF_H = 144;
 const TARGET_W = 250;

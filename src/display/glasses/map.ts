@@ -52,16 +52,18 @@ export function mapImageObjects() {
 
 // Push the map into the display
 export async function pushMapToDisplay() {
-	await bridgeRef.updateImageRawData(new ImageRawDataUpdate({
-		containerID: mapTopContainerId,
-		containerName: 'mapPrimeTop',
-		imageData: mapPrimeTopBytes
-	}))
-	await bridgeRef.updateImageRawData(new ImageRawDataUpdate({
-		containerID: mapBottomContainerId,
-		containerName: 'mapPrimeBottom',
-		imageData: mapPrimeBottomBytes
-	}))
+	await Promise.all([
+		bridgeRef.updateImageRawData(new ImageRawDataUpdate({
+			containerID: mapTopContainerId,
+			containerName: 'mapPrimeTop',
+			imageData: mapPrimeTopBytes
+		})),
+		bridgeRef.updateImageRawData(new ImageRawDataUpdate({
+			containerID: mapBottomContainerId,
+			containerName: 'mapPrimeBottom',
+			imageData: mapPrimeBottomBytes
+		}))
+	]);
 }
 
 
@@ -73,15 +75,61 @@ export async function pushRouteMapToDisplay(routeIndex) {
 		return;
 	}
 
-	await bridgeRef.updateImageRawData(new ImageRawDataUpdate({
-		containerID: mapTopContainerId,
-		containerName: 'mapPrimeTop',
-		imageData: routeVar.top.bytes
-	}))
-	await bridgeRef.updateImageRawData(new ImageRawDataUpdate({
-		containerID: mapBottomContainerId,
-		containerName: 'mapPrimeBottom',
-		imageData: routeVar.bottom.bytes
-	}))
+	await Promise.all([
+		bridgeRef.updateImageRawData(new ImageRawDataUpdate({
+			containerID: mapTopContainerId,
+			containerName: 'mapPrimeTop',
+			imageData: routeVar.top.bytes
+		})),
+		bridgeRef.updateImageRawData(new ImageRawDataUpdate({
+			containerID: mapBottomContainerId,
+			containerName: 'mapPrimeBottom',
+			imageData: routeVar.bottom.bytes
+		}))
+	]);
 
+}
+
+let flashTimer: ReturnType<typeof setInterval> | null = null;
+let flashShowingRoute = false;
+let flashGeneration = 0;
+
+// Alternates the display between the base map and the highlighted route
+// every intervalMs, giving the selected route a blinking effect.
+export function startRouteFlash(routeIndex: number, intervalMs = 500) {
+	stopRouteFlash();
+	flashShowingRoute = false;
+	const myGeneration = ++flashGeneration;
+
+	async function tick() {
+		if (myGeneration !== flashGeneration) {
+			return;
+		}
+
+		flashShowingRoute = !flashShowingRoute;
+		if (flashShowingRoute) {
+			await pushRouteMapToDisplay(routeIndex);
+		} else {
+			await pushMapToDisplay();
+		}
+
+		if (myGeneration !== flashGeneration) {
+			return;
+		}
+
+		flashTimer = setTimeout(tick, intervalMs);
+	}
+	
+	flashTimer = setTimeout(tick, intervalMs);
+}
+
+
+
+export function stopRouteFlash() {
+	flashGeneration++;
+
+	if (flashTimer) {
+		clearTimeout(flashTimer);
+		flashTimer = null;
+	}
 }

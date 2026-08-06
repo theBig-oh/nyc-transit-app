@@ -3,7 +3,7 @@ import { waitForEvenAppBridge, TextContainerProperty, CreateStartUpPageContainer
 import { setGeoBridge, getUserLocation } from './utils/geolocate';  
 import { mtaURL, setUserLat, setUserLon, userLat, userLon, FALLBACK_LAT, FALLBACK_LON, trainRoutesByColor, SCROLL_DEBOUNCE_MS } from './state';
 import { displayGrid } from './utils/makeElement';
-import { setMapBridge, mapImageObjects, pushMapToDisplay, pushRouteMapToDisplay } from './display/glasses/map';
+import { setMapBridge, mapImageObjects, pushMapToDisplay, startRouteFlash } from './display/glasses/map';
 import { routeListObject, RouteListContainerId } from './display/glasses/routeList';
 
 import GtfsRealtimeBindings from 'gtfs-realtime-bindings';
@@ -224,7 +224,7 @@ bridge.onEvenHubEvent((event) => {
 
   scrollDebounceTimer = setTimeout(() => {
     lastPushedIndex = index;
-    pushRouteMapToDisplay(index)
+    startRouteFlash(index);
   }, SCROLL_DEBOUNCE_MS);
 })
 
